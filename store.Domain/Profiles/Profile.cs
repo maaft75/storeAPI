@@ -8,6 +8,7 @@ namespace store.Domain.Profiles
         public Profile()
         {
             CreateMap<UserDto, User>();
+            //CreateMap<User, UserDto>();
         }
     }
 }

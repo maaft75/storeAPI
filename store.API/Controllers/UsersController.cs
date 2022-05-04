@@ -1,6 +1,7 @@
 using store.Domain.Models;
 using store.Service.Service;
 using Microsoft.AspNetCore.Mvc;
+using store.Domain.DTOs;
 
 namespace store.API.Controllers
 {
@@ -24,6 +25,15 @@ namespace store.API.Controllers
             response.Add("message", "success");
 
             return response;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Dictionary<string, object>>> Registration(UserDto userDto)
+        {
+            Dictionary<string, object> response = await _usersService.Registration(userDto);
+            bool error = response.ContainsKey("error");
+            ActionResult<Dictionary<string, object>> result = error ? BadRequest(response) : Ok(response);
+            return result;
         }
     }
 }

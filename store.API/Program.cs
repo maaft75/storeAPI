@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<StoreContext>(options => { 
     options.UseNpgsql(builder.Configuration.GetConnectionString("StoreContext"), b => b.MigrationsAssembly("store.Repository"));
 });

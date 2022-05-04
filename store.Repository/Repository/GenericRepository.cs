@@ -7,7 +7,7 @@ namespace store.Repository.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly StoreContext _context;
+        protected readonly StoreContext _context;
 
         public GenericRepository(StoreContext context)
         {

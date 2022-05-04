@@ -1,6 +1,7 @@
 using store.Domain.Models;
 using store.Repository.Data;
 using store.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace store.Repository.Repository
 {
@@ -9,6 +10,11 @@ namespace store.Repository.Repository
         public UserRepository(StoreContext context) : base(context)
         {
             
+        }
+
+        public Task<bool> CheckIfEmailExists(string emailAddress)
+        {
+            return _context.TBL_USERS.AnyAsync(x => x.Email_Address == emailAddress);
         }
     }
 }
