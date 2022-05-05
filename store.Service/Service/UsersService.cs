@@ -43,9 +43,13 @@ namespace store.Service.Service
             }
         }
 
-        public async Task<User> GetUser(int Id)
+        public async Task<Dictionary<string, object>> GetUser(int Id)
         {
-            return await _unitOfWork.userRepo.FindByCondition(x => x.Id == Id);
+            Dictionary<string, object> result = new();
+            User user = await _unitOfWork.userRepo.FindByCondition(x => x.Id == Id);
+            result.Add("data", user);
+            result.Add("message", "success");
+            return result;
         }
     }
 }

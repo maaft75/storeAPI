@@ -22,11 +22,7 @@ namespace store.API.Controllers.v1
         public async Task<ActionResult<Dictionary<string, object>>> GetById(int Id)
         {
             Dictionary<string, object> response = new();
-            User user = await _usersService.GetUser(Id);
-            response.Add("data", user);
-            response.Add("message", "success");
-
-            return response;
+            return await _usersService.GetUser(Id);
         }
 
         [MapToApiVersion("1.0")]
