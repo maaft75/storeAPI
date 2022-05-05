@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+<<<<<<< HEAD
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddApiVersioning(o =>
 {
@@ -31,6 +32,10 @@ builder.Services.AddVersionedApiExplorer(options =>
         options.SubstituteApiVersionInUrl = true;
 });
 
+=======
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
+//Services.AddAutoMapper(typeof(Program).Assembly);
+>>>>>>> e8a140df852d905d82d9206f7bad21e4e075a74d
 builder.Services.AddDbContext<StoreContext>(options => { 
     options.UseNpgsql(builder.Configuration.GetConnectionString("StoreContext"), b => b.MigrationsAssembly("store.Repository"));
 });

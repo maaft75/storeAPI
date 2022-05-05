@@ -34,9 +34,9 @@ namespace store.Repository.Repository
             return await _context.Set<T>().Where(expression).FirstOrDefaultAsync();
         }
 
-        public async Task<List<T>> FindByAll(Expression<Func<T, bool>> expression)
+        public async Task<List<T>> FindByAll()
         {
-            return await _context.Set<T>().Where(expression).ToListAsync();
+            return await _context.Set<T>().ToListAsync();
         }
     }
 }

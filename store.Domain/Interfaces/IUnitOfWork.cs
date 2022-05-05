@@ -2,7 +2,7 @@ namespace store.Domain.Interfaces
 {
     public interface IUnitOfWork
     {
-        void Save();
+        Task<bool> Save();
         IUserRepository userRepo{ get; }
     }
 }
