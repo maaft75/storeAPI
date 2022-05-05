@@ -23,8 +23,8 @@ namespace store.Repository.UnitOfWork
             }
         }
 
-        public void Save(){
-            _context.SaveChangesAsync();
+        public async Task<bool> Save(){
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -25,10 +25,17 @@ namespace store.Service.Service
                 {
                     User user = _mapper.Map<User>(userDto);
                     await _unitOfWork.userRepo.Create(user);
-                    _unitOfWork.Save();
-                    result.Add("message", "User created successfully");
-                    result.Add("data", JsonConvert.SerializeObject(userDto));
-                    return result;
+                    if(await _unitOfWork.Save())
+                    {
+                        result.Add("message", "User created successfully");
+                        result.Add("data", userDto);
+                        return result;
+                    }
+                    else
+                    {
+                        result.Add("message", "Registration failed.");
+                        return result;
+                    }
                 }
                 else
                 {
@@ -47,5 +54,10 @@ namespace store.Service.Service
         {
             return await _unitOfWork.userRepo.FindByCondition(x => x.Id == Id);
         }
+
+        // public async Task<List<User>> GetUser(int Id)
+        // {
+        //     return await _unitOfWork.userRepo.FindByAll();
+        // }
     }
 }
