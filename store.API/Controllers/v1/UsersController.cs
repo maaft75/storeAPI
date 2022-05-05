@@ -1,12 +1,13 @@
+using store.Domain.DTOs;
 using store.Domain.Models;
 using store.Service.Service;
 using Microsoft.AspNetCore.Mvc;
-using store.Domain.DTOs;
 
-namespace store.API.Controllers
+namespace store.API.Controllers.v1
 {
-    [Route("api/v1/users")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly UsersService _usersService;
@@ -16,6 +17,7 @@ namespace store.API.Controllers
             _usersService = usersService;
         }
 
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<ActionResult<Dictionary<string, object>>> GetById(int Id)
         {
@@ -27,7 +29,8 @@ namespace store.API.Controllers
             return response;
         }
 
-        [HttpPost]
+        [MapToApiVersion("1.0")]
+        [HttpPost("registration")]
         public async Task<ActionResult<Dictionary<string, object>>> Registration(UserDto userDto)
         {
             Dictionary<string, object> response = await _usersService.Registration(userDto);
