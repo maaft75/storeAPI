@@ -7,7 +7,7 @@ namespace store.Domain.Interfaces
         Task Create(T entity);
         void Delete(T entity);
         void Update(T entity);
-        Task<List<T>> FindByAll(Expression<Func<T, bool>> expression);
+        Task<List<T>> FindByAll();
         Task<T> FindByCondition(Expression<Func<T, bool>> expression);
     }
 }
