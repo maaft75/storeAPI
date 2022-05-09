@@ -1,4 +1,4 @@
-using store.Domain.Models;
+using store.Domain.Models.v1;
 using Microsoft.EntityFrameworkCore;
 
 namespace store.Repository.Data

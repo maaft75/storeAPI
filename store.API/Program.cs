@@ -1,10 +1,13 @@
 using store.API;
+using store.Domain.Config;
 using store.Repository.Data;
-using store.Service.Service;
 using store.Domain.Interfaces;
 using store.Repository.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using UserServiceV1 = store.Service.Service.v1.UsersService;
+using UserServiceV2 = store.Service.Service.v2.UsersService;
+using userRepositoryv2 = store.Repository.Repository.v2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<UserServiceV1>();
+builder.Services.AddScoped<userRepositoryv2.UserRepository>();
+builder.Services.AddScoped<UserServiceV2>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-<<<<<<< HEAD
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddApiVersioning(o =>
 {
     o.AssumeDefaultVersionWhenUnspecified = true;
@@ -32,10 +35,9 @@ builder.Services.AddVersionedApiExplorer(options =>
         options.SubstituteApiVersionInUrl = true;
 });
 
-=======
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
-//Services.AddAutoMapper(typeof(Program).Assembly);
->>>>>>> e8a140df852d905d82d9206f7bad21e4e075a74d
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
+builder.Services.AddTransient<MongoContext>();
 builder.Services.AddDbContext<StoreContext>(options => { 
     options.UseNpgsql(builder.Configuration.GetConnectionString("StoreContext"), b => b.MigrationsAssembly("store.Repository"));
 });

@@ -1,6 +1,5 @@
 using store.Domain.DTOs;
-using store.Domain.Models;
-using store.Service.Service;
+using store.Service.Service.v1;
 using Microsoft.AspNetCore.Mvc;
 
 namespace store.API.Controllers.v1

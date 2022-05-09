@@ -1,4 +1,4 @@
-using store.Domain.Models;
+using store.Domain.Models.v1;
 
 namespace store.Domain.Interfaces
 {

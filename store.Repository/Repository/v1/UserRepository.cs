@@ -1,5 +1,5 @@
-using store.Domain.Models;
 using store.Repository.Data;
+using store.Domain.Models.v1;
 using store.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

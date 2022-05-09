@@ -1,6 +1,5 @@
 using store.Domain.DTOs;
-using store.Domain.Models;
-using store.Service.Service;
+using store.Service.Service.v2;
 using Microsoft.AspNetCore.Mvc;
 
 namespace store.API.Controllers.v2
@@ -15,14 +14,6 @@ namespace store.API.Controllers.v2
         public UsersController(UsersService usersService)
         {
             _usersService = usersService;
-        }
-
-        [MapToApiVersion("2.0")]
-        [HttpGet]
-        public async Task<ActionResult<Dictionary<string, object>>> GetById(int Id)
-        {
-            Dictionary<string, object> response = new();
-            return await _usersService.GetUser(Id);
         }
 
         [MapToApiVersion("2.0")]

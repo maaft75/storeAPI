@@ -9,8 +9,7 @@ namespace store.API
     {
         private readonly IApiVersionDescriptionProvider provider;
 
-        public ConfigureSwaggerOptions(
-            IApiVersionDescriptionProvider provider)
+        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
         {
             this.provider = provider;
         }
@@ -35,7 +34,7 @@ namespace store.API
         {
             var info = new OpenApiInfo()
             {
-                Title = "Heroes API",
+                Title = " Store API",
                 Version = description.ApiVersion.ToString()
             };
 

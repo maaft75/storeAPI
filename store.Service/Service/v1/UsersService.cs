@@ -1,10 +1,10 @@
 using AutoMapper;
-using Newtonsoft.Json;
 using store.Domain.DTOs;
-using store.Domain.Models;
+using store.Domain.Models.v1;
 using store.Domain.Interfaces;
+using store.Repository.Repository;
 
-namespace store.Service.Service
+namespace store.Service.Service.v1
 {
     public class UsersService
     {
