@@ -43,8 +43,11 @@ builder.Services.AddDbContext<StoreContext>(options => {
 });
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
- var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -59,7 +62,7 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-
+app.MapHealthChecks("/healthz");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

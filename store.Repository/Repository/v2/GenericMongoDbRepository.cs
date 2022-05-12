@@ -1,8 +1,5 @@
-using MongoDB.Driver;
-using store.Domain.Config;
-using store.Domain.Interfaces;
-using Microsoft.Extensions.Options;
 using store.Repository.Data;
+using store.Domain.Interfaces;
 
 namespace store.Repository.Repository
 {
