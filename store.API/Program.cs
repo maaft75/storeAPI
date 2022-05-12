@@ -43,7 +43,7 @@ builder.Services.AddDbContext<StoreContext>(options => {
 });
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("StoreContext"));
 
 var app = builder.Build();
 
@@ -62,7 +62,7 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-app.MapHealthChecks("/healthz");
+app.MapHealthChecks("/database/health");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

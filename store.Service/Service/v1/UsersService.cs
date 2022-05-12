@@ -1,8 +1,8 @@
 using AutoMapper;
 using store.Domain.DTOs;
+using store.Domain.Requests;
 using store.Domain.Models.v1;
 using store.Domain.Interfaces;
-using store.Repository.Repository;
 
 namespace store.Service.Service.v1
 {
@@ -24,24 +24,17 @@ namespace store.Service.Service.v1
                 if (await _unitOfWork.userRepo.CheckIfEmailExists(userDto.Email_Address) == false)
                 {
                     User user = _mapper.Map<User>(userDto);
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
                     await _unitOfWork.userRepo.Create(user);
-                    if(await _unitOfWork.Save())
-                    {
-                        result.Add("message", "User created successfully");
-                        result.Add("data", userDto);
-                        return result;
-                    }
-                    else
-                    {
-                        result.Add("message", "Registration failed.");
-                        return result;
-                    }
+                    await _unitOfWork.Save();
+                    result.Add("message", "User created successfully");
+                    result.Add("data", userDto);
                 }
                 else
                 {
                     result.Add("message", "This email address is already in use.");
-                    return result;
                 }
+                return result;
             }
             catch (Exception ex)
             {
@@ -50,18 +43,32 @@ namespace store.Service.Service.v1
             }
         }
 
-        public async Task<Dictionary<string, object>> GetUser(int Id)
+        public async Task<Dictionary<string, object>> Login(Login login)
         {
             Dictionary<string, object> result = new();
-            User user = await _unitOfWork.userRepo.FindByCondition(x => x.Id == Id);
-            result.Add("data", user);
-            result.Add("message", "success");
-            return result;
+            try
+            {
+                User user = await _unitOfWork.userRepo
+                                .FindByCondition(x => x.Email_Address == login.Email_Address);
+                bool verifyPassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
+                if(user != null && verifyPassword)
+                {
+                    GetUserDto getUserDto = _mapper.Map<GetUserDto>(user);
+                    result.Add("data", getUserDto);
+                    result.Add("message", "success");
+                }
+                else
+                {
+                    result.Add("error", "Invalid credentials.");
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Add("error", ex.ToString());
+                return result;
+            }
         }
-
-        // public async Task<List<User>> GetUser(int Id)
-        // {
-        //     return await _unitOfWork.userRepo.FindByAll();
-        // }
+        
     }
 }

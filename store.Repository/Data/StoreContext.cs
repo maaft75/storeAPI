@@ -8,5 +8,6 @@ namespace store.Repository.Data
         public StoreContext(DbContextOptions<StoreContext> options) : base(options){}
 
         public DbSet<User> TBL_USERS{get; set;}
+        public DbSet<Store> TBL_STORES{get; set;}
     }
 }

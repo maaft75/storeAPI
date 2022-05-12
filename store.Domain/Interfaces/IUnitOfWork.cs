@@ -1,3 +1,4 @@
+using System.Transactions;
 using store.Domain.Models;
 
 namespace store.Domain.Interfaces
@@ -6,6 +7,7 @@ namespace store.Domain.Interfaces
     {
         Task<bool> Save();
         IUserRepository userRepo{ get; }
+        IStoreRepository storeRepo{ get; }
         //MongoDbRepository<User> mongoUserRepo{ get; }
     }
 }

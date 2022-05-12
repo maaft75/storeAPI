@@ -8,7 +8,6 @@ namespace store.API
     public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
     {
         private readonly IApiVersionDescriptionProvider provider;
-
         public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
         {
             this.provider = provider;

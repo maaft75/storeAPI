@@ -1,37 +1,35 @@
 using store.Domain.DTOs;
-using store.Service.Service.v1;
 using Microsoft.AspNetCore.Mvc;
-using store.Domain.Requests;
+using store.Service.Service.v1;
 
 namespace store.API.Controllers.v1
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class UsersController : ControllerBase
+    public class StoreController : ControllerBase
     {
-        private readonly UsersService _usersService;
-
-        public UsersController(UsersService usersService)
+        private readonly StoreService _storeService;
+        public StoreController(StoreService storeService)
         {
-            _usersService = usersService;
+            _storeService = storeService;
         }
 
         [MapToApiVersion("1.0")]
-        [HttpPost("login")]
-        public async Task<ActionResult<Dictionary<string, object>>> Login(Login login)
+        [HttpPost("createstore")]
+        public async Task<ActionResult<Dictionary<string, object>>> CreateStore(CreateStoreDto createStoreDto)
         {
-            Dictionary<string, object> response = await _usersService.Login(login);
+            Dictionary<string, object> response = await _storeService.CreateStore(createStoreDto);
             bool error = response.ContainsKey("error");
             ActionResult<Dictionary<string, object>> result = error ? BadRequest(response) : Ok(response);
             return result;
         }
 
         [MapToApiVersion("1.0")]
-        [HttpPost("registration")]
-        public async Task<ActionResult<Dictionary<string, object>>> Registration(UserDto userDto)
+        [HttpPost("getstorebyuser")]
+        public async Task<ActionResult<Dictionary<string, object>>> GetStoreByUser(int Id)
         {
-            Dictionary<string, object> response = await _usersService.Registration(userDto);
+            Dictionary<string, object> response = await _storeService.GetStoreByUser(Id);
             bool error = response.ContainsKey("error");
             ActionResult<Dictionary<string, object>> result = error ? BadRequest(response) : Ok(response);
             return result;
